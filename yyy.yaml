@@ -1,0 +1,70 @@
+---
+# ------------------- Dosec server configMap ------------------- #
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: server-config
+  namespace: dosec
+data:
+  WEB_DB_CONN: "host=192.168.1.92 port=30432 user=postgres password=L1wrVTCaeLtQ4598 dbname=web sslmode=disable statement_timeout=60000"
+  CVE_DB_CONN: "host=192.168.1.92 port=30432 user=postgres password=L1wrVTCaeLtQ4598 dbname=cve sslmode=disable statement_timeout=60000"
+  WEB_SCAN: "postgres://postgres:L1wrVTCaeLtQ4598@192.168.1.92:30432/web?sslmode=disable"
+  VUL_DB_ADDR: '192.168.1.92:30432'
+  DOCKER_API_VERSION: '1.36'
+  WEB_API: '192.168.1.92:30089'
+  REGISTER_ADDR: '192.168.1.92:32345' #register center's addr(app's addr)
+  CLUSTER_NAME: 'test' #each cluster must have a unique name
+
+---
+# ------------------- Dosec scanner configMap ------------------- #
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scanner-config
+  namespace: dosec
+data:
+  WEB_DB_CONN: "host=192.168.1.92 port=30432 user=postgres password=L1wrVTCaeLtQ4598 dbname=web sslmode=disable statement_timeout=60000"
+  CVE_DB_CONN: "host=192.168.1.92 port=30432 user=postgres password=L1wrVTCaeLtQ4598 dbname=cve sslmode=disable statement_timeout=60000"
+  VUL_DB_ADDR: '192.168.1.92:30432'
+  DOSEC_SERVER_ADDR: '127.0.0.1:1234'
+  DOCKER_API_VERSION: '1.36'
+
+---
+# ------------------- Dosec app configMap ------------------- #
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: dosec
+data:
+  WEB_DB_CONN: "host=192.168.1.92 port=30432 user=postgres password=L1wrVTCaeLtQ4598 dbname=web sslmode=disable statement_timeout=60000"
+  CVE_DB_CONN: "host=192.168.1.92 port=30432 user=postgres password=L1wrVTCaeLtQ4598 dbname=cve sslmode=disable statement_timeout=60000"
+  VUL_DB_ADDR: '192.168.1.92:30432'
+  WEB_DOMAIN_NAME: 'https://simu.dosec.cn'
+  API_PORT: '8089'
+  REGISTER_ADDR: '192.168.1.92:32345' #controller's addr
+
+---
+# ------------------- Dosec agent configMap ------------------- #
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agent-config
+  namespace: dosec
+data:
+  DOSEC_SERVER_ADDR: 'dosec-server.dosec.svc.cluster.local:1234'
+  DOCKER_API_VERSION: '1.36'
+
+---
+# ------------------- Dosec controller configMap ------------------- #
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: controller-config
+  namespace: dosec
+data:
+  WEB_DB_CONN: "host=192.168.1.92 port=30432 user=postgres password=L1wrVTCaeLtQ4598 dbname=web sslmode=disable statement_timeout=60000"
